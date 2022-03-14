@@ -7,14 +7,14 @@ COPY ./requirements.txt /requirements.txt
 COPY ./detect /detect
 COPY ./yolo_signature.pt /yolo_signature.pt
 
-# RUN apt-get update && \
-#     apt-get install -y \
-#         build-essential \
-#         python3-dev \
-#         python3-setuptools \
-#     && apt-get remove -y --purge build-essential \
-#     && apt-get autoremove -y \
-#     && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install ffmpeg libsm6 libxext6 -y \
+        build-essential \
+        python3-dev \
+        python3-setuptools \
+    && apt-get remove -y --purge build-essential \
+    && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/*
 
 # set the working directory in the container to be /app
 WORKDIR /

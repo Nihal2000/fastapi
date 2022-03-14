@@ -9,7 +9,10 @@ from PIL import Image
 from detect import run
 
 # load environment variables
-port = os.environ["PORT"]
+try:
+    port = os.environ["PORT"]
+except:
+    port= 8000
 
 app =  FastAPI()
 
