@@ -3,17 +3,24 @@ FROM python:3.7.9-slim
 
 # copy files to the /app folder in the container
 COPY ./app /app
-COPY ./Pipfile /app/Pipfile
-COPY ./Pipfile.lock /app/Pipfile.lock
+COPY ./requirements.txt /requirements.txt
 COPY ./detect /detect
 COPY ./yolo_signature.pt /yolo_signature.pt
+
+# RUN apt-get update && \
+#     apt-get install -y \
+#         build-essential \
+#         python3-dev \
+#         python3-setuptools \
+#     && apt-get remove -y --purge build-essential \
+#     && apt-get autoremove -y \
+#     && rm -rf /var/lib/apt/lists/*
 
 # set the working directory in the container to be /app
 WORKDIR /
 
 # install the packages from the Pipfile in the container
-RUN pip install pipenv
-RUN pipenv install --system --deploy --ignore-pipfile
+RUN python3 -m pip install -r requirements.txt
 
 # expose the port that uvicorn will run the app on
 ENV PORT=8000
